@@ -1,0 +1,63 @@
+package timu2;
+
+import java.util.Scanner;
+
+public class timu2 
+{
+	static int a[]=new int[100000],b[]=new int[100000],c[]=new int[100000];
+	static void sort(int s,int e)
+	{
+		if(e<=s)return;
+		int mid=(s+e)/2;
+		sort(s, mid);
+		sort(mid+1, e);
+		int num=s,s1=s,s2=mid+1;
+		while(s1<=mid||s2<=e)
+		{
+			if(s1>mid||(s1<=mid&&a[s1]<a[s2]))
+			{
+				c[num]=b[s2];
+				num++;
+				s2++;
+			}
+			else {
+				c[num]=b[s1];
+				num++;
+				s1++;
+			}
+		}
+		for(int i=s;i<=e;i++)
+		{
+			b[i]=c[i];
+		}
+	}
+	public static void main(String args[])
+	{
+		Scanner scan=new Scanner(System.in);
+		String s=new String();
+		s=scan.nextLine();
+		int sum=0,sum1=0,num=0;
+		for(int i=0;i<s.length();i++)
+		{
+			if(s.charAt(i)=='£¬')
+			{
+				num++;
+				a[num]=sum;
+				b[num]=a[num];
+				sum1+=sum;
+				sum=0;
+			}
+			else
+			{
+				sum*=10;
+				sum+=s.charAt(i)-'0';
+			}
+		}
+		num++;
+		a[num]=sum;
+		sum1+=sum;
+		System.out.print(sum1/num);
+		System.out.print("#");
+		sort(1,num);
+	}
+}

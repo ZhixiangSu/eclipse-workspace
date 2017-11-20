@@ -1,0 +1,18 @@
+package hannuota;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class hannuota 
+{
+	public static void main(String args[])
+	{
+		JFrame f1=new JFrame("ººÅµËþ");
+		f1.setLayout(null);
+		JLabel l1=new JLabel("ººÅµËþ");
+		f1.setSize(500, 500);
+		f1.add(l1);
+		l1.setBounds(100, 100,100,50);
+		f1.setVisible(true);
+	}
+}

@@ -1,0 +1,67 @@
+package test;
+
+import java.util.Scanner;
+
+public class Main {
+	static int s[]=new int[10001];
+	static int e[]=new int [10001];
+	static int num[]=new int[10001];
+	static int c[]=new int[10001];
+	public static void sort(int s1,int e1)
+	{
+		if(s1>=e1)return;
+		int mid=s1;
+		for(int i=s1;i<e1;i++)
+		{
+			if(e[i]>e[e1])
+			{
+				int n=e[i];
+				e[i]=e[e1];
+				e[e1]=n;
+				int n2=num[i];
+				num[i]=num[e1];
+				num[e1]=n2;
+				mid++;
+			}
+		}
+		int n=e[e1];
+		e[e1]=e[mid];
+		e[mid]=n;
+		int n2=num[mid];
+		num[mid]=num[e1];
+		num[e1]=n2;
+		sort(s1, mid-1);
+		sort(mid+1, e1);
+	}
+	public static void main(String args[])
+	{
+		int n,k;
+		Scanner scan=new Scanner(System.in);
+		n=scan.nextInt();
+		k=scan.nextInt();
+		for(int i=1;i<=k;i++)
+		{
+			num[i]=scan.nextInt();
+			s[i]=scan.nextInt();
+			e[i]=scan.nextInt()+s[i];
+			
+		}
+		sort(1,k);
+		for(int i=1;i<=k;i++)
+		{
+			if(c[num[i]]==0)
+				{
+					System.out.print(num[i]+" ");
+					c[num[i]]=1;
+				}
+		}
+		for(int i=1;i<=n;i++)
+		{
+			if(c[i]==0)
+			{
+				System.out.print(i+" ");
+				c[num[i]]=1;
+			}
+		}
+	}
+}

@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.beancontext.BeanContext;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.Box;
@@ -31,8 +32,9 @@ public class timu8 extends JApplet
     JPanel p1=new JPanel();
     JPanel p2=new JPanel();
     JPanel p3=new JPanel();
-    JPanel p4[]=new JPanel[3];
+    JPanel p4[]=new JPanel[4];
     JButton b1=new JButton("确定");
+    JButton b2=new JButton("下一步");
     JTextField t1=new JTextField();
     JButton tb[];
     public void init()
@@ -62,18 +64,27 @@ public class timu8 extends JApplet
     	t1.setFont(new Font("楷体",Font.BOLD,30));
     	t1.setHorizontalAlignment(JTextField.HORIZONTAL);
     	//set p3
-    	p3.setLayout(new GridLayout(1,3));
+    	p3.setLayout(new GridLayout(1,4));
     	p4[0]=new JPanel();
     	p4[1]=new JPanel();
     	p4[2]=new JPanel();
+    	p4[3]=new JPanel();
     	p3.add(p4[0]);
     	p3.add(p4[1]);
     	p3.add(p4[2]);
+    	p3.add(p4[3]);
     	p3.setBackground(Color.black);
     	//set p3x
     	p4[0].setLayout(new BoxLayout(p4[0], BoxLayout.Y_AXIS));
     	p4[1].setLayout(new BoxLayout(p4[1], BoxLayout.Y_AXIS));
     	p4[2].setLayout(new BoxLayout(p4[2], BoxLayout.Y_AXIS));
+    	p4[3].setLayout(new BorderLayout());
+    	//set p4[3]
+    	p4[3].add("Center",b2);
+    	p4[3].add("North",new JLabel("       "));
+    	p4[3].add("South",new JLabel("       "));
+    	p4[3].add("East",new JLabel("              "));
+    	p4[3].add("West",new JLabel("              "));
     }
     public void firstTowel(int n)
     {
@@ -118,6 +129,7 @@ public class timu8 extends JApplet
     	b[x]=e;
     	setTowel(n);
     	repaint();
+		
     }
     public void step(int s,int e,int n1,int n)
     {
@@ -139,13 +151,11 @@ public class timu8 extends JApplet
 				int n=Integer.parseInt(t1.getText());
 				remove(p0);
 				add(p3);
-				p3.updateUI();
 				repaint();
 				b=new int[n+1];
 				a[0]=n;
 				setSize(n*100,(n+2)*35);
 				firstTowel(n);
-				p3.updateUI();
 				step(0, 2,n,n);
 			}
 		});
