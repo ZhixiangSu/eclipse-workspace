@@ -34,7 +34,6 @@ public class timu8 extends JApplet
     JPanel p3=new JPanel();
     JPanel p4[]=new JPanel[4];
     JButton b1=new JButton("确定");
-    JButton b2=new JButton("下一步");
     JTextField t1=new JTextField();
     JButton tb[];
     public void init()
@@ -80,7 +79,6 @@ public class timu8 extends JApplet
     	p4[2].setLayout(new BoxLayout(p4[2], BoxLayout.Y_AXIS));
     	p4[3].setLayout(new BorderLayout());
     	//set p4[3]
-    	p4[3].add("Center",b2);
     	p4[3].add("North",new JLabel("       "));
     	p4[3].add("South",new JLabel("       "));
     	p4[3].add("East",new JLabel("              "));
