@@ -8,13 +8,15 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class ShowAnim extends JPanel {
+public class ShowAnim extends JPanel implements Cloneable
+{
 	public static boolean picture[][];
 	public static Part part;
 	public static Square square[][];
 	public static int rows = 0, cols = 0;
 	public static int x, y;
 	public static int speed = 300;
+	public static boolean control=true;
 	static ImageIcon icon=new ImageIcon("fangkuai.jpg");
 //	public void paintComponent(Graphics g)
 //	{
@@ -43,7 +45,7 @@ public class ShowAnim extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
-				if(part!=null)
+				if(part!=null&&control)
 				{
 					int code = e.getKeyCode();
 					if (code == KeyEvent.VK_LEFT&&x>0) {
@@ -88,7 +90,7 @@ public class ShowAnim extends JPanel {
 
 			}
 
-			@Override
+			@Override	
 			public void keyTyped(KeyEvent e) {
 				// TODO Auto-generated method stub
 
@@ -97,7 +99,7 @@ public class ShowAnim extends JPanel {
 	}
 
 	public void addpart(Part p,Analyse analyse) {
-		this.part = p.clone();
+		this.part = (Part) p.clone();
 		x = cols / 2 - 2;
 		y = 4;
 		partdown(analyse);
@@ -106,7 +108,7 @@ public class ShowAnim extends JPanel {
 		y = 0;
 	}
 	public void addpart(Part p,Analyse analyse,int x1,int y1) {
-		this.part = p.clone();
+		this.part = (Part) p.clone();
 		x = x1;
 		y = y1;
 		partdown(analyse);
@@ -116,9 +118,9 @@ public class ShowAnim extends JPanel {
 	}
 	public void doanalyse(Analyse analyse)
 	{
-		if(!analyse.queue.isEmpty())
+		while(analyse!=null&&analyse.actions[y]!=null&&!analyse.actions[y].action.isEmpty())
 		{
-			int q=analyse.queue.poll();
+			int q=analyse.actions[y].action.poll();
 			int code = -1;
 			if(q==1)code=KeyEvent.VK_LEFT;
 			else if(q==2)code=KeyEvent.VK_RIGHT;
@@ -126,52 +128,77 @@ public class ShowAnim extends JPanel {
 			if(part!=null)
 			{
 				if (code == KeyEvent.VK_LEFT&&x>0) {
-					int rigid=0;
-					for(int i=0;i<part.picture.length;i++)
-					{
-						if(picture[i+y][x-1]&&part.picture[i][0])rigid=1;
-					}
-					if(rigid==0)x--;
+//					int rigid=0;
+//					for(int i=0;i<part.picture.length;i++)
+//					{
+//						if(picture[i+y][x-1]&&part.picture[i][0])rigid=1;
+//					}
+//					if(rigid==0)
+						x--;
 				} else if (code == KeyEvent.VK_RIGHT&&x+part.picture[0].length<cols) {
-					int rigid=0;
-					for(int i=0;i<part.picture.length;i++)
-					{
-						if(picture[i+y][x+part.picture[0].length]&&part.picture[i][part.picture[0].length-1])rigid=1;
-					}
-					if(rigid==0)
+//					int rigid=0;¡¤
+//					for(int i=0;i<part.picture.length;i++)
+//					{
+//						if(picture[i+y][x+part.picture[0].length]&&part.picture[i][part.picture[0].length-1])rigid=1;
+//					}
+//					if(rigid==0)
 					x++;
 				} 
 				else if (code == KeyEvent.VK_UP) {
 					int rigid=0;
 					boolean part2[][]=part.rotate();
-					for(int i=0;i<part2.length;i++)
-					{
-						for(int j=0;j<part2[i].length;j++)
-						{
-							if(i+y>=rows+4||j+x>=cols||(part2[i][j]==true&&picture[i+y][j+x]==true))
-							{
-								rigid=1;
-							}
-						}
-					}
-					if(rigid==0)
+//					for(int i=0;i<part2.length;i++)
+//					{
+//						for(int j=0;j<part2[i].length;j++)
+//						{
+//							if(i+y>=rows+4||j+x>=cols||(part2[i][j]==true&&picture[i+y][j+x]==true))
+//							{
+//								rigid=1;
+//							}
+//						}
+//					}
+//					if(rigid==0)
 					part.picture=part2;
 				} 
 				shownow2();
 			}
 		}
+//		if(!analyse.rota.isEmpty())
+//		{
+//			int r1=analyse.rota.poll();
+//			while(r1>0)
+//			{
+//				int rigid=0;
+//				boolean part2[][]=part.rotate();
+//				for(int i=0;i<part2.length;i++)
+//				{
+//					for(int j=0;j<part2[i].length;j++)
+//					{
+//						if(i+y>=rows+4||j+x>=cols||(part2[i][j]==true&&picture[i+y][j+x]==true))
+//						{
+//							rigid=1;
+//						}
+//					}
+//				}
+//				if(rigid==0)
+//				part.picture=part2;
+//				shownow2();
+//				r1--;
+//			}
+//		}
+		
 	}
 	public void partdown(Analyse analyse) {
 
-		boolean stop = false;
-		while (!stop) {
+		control=true;
+		while (control) {
 			doanalyse(analyse);
 			shownow2();
 			y++;
 			for (int i = 0; i < part.picture.length; i++) {
 				for (int j = 0; j < part.picture[i].length; j++) {
 					if (part.picture[i][j] == true && (i + y == rows + 5 || picture[i + y][j + x] == true)) {
-						stop = true;
+						control=false;
 					}
 				}
 			}
@@ -239,5 +266,18 @@ public class ShowAnim extends JPanel {
 			}
 		}
 		this.repaint();
+	}
+	public Object clone() {
+		// TODO Auto-generated constructor stub
+//		Part p1=new Part(picture);
+//		return p1;
+		ShowAnim p1 = null;
+		try {
+			p1=(ShowAnim) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return p1;
 	}
 }

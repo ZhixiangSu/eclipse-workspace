@@ -15,10 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class hannuota
+public class Hannuota
 {
 	static JFrame frame=new JFrame("ººÅµËþ");
-	int a[]=new int[3],b[];
+	static int a[]=new int[3],b[];
     static JLabel l1=new JLabel("ººÅµËþ",JLabel.CENTER);
     static JLabel l2=new JLabel("²ãÊý",JLabel.CENTER);
     static JPanel p0=new JPanel();
@@ -28,7 +28,8 @@ public class hannuota
     static JPanel p4[]=new JPanel[4];
     static JButton b1=new JButton("È·¶¨");
     static JTextField t1=new JTextField();
-    static Show show=new Show();
+    static Show show;
+    static int number=3;
     public static void main(String args[])
     {
     	//set frame
@@ -63,8 +64,10 @@ public class hannuota
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				Thread t1=new Thread(show);
-				t1.start();
+				number=Integer.parseInt(t1.getText());
+				show=new Show(number);
+				Thread th1=new Thread(show);
+				th1.start();
 			}
 		});
     }

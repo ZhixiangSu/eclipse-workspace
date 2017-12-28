@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -39,7 +40,7 @@ public class MainUI {
 	static ShowAnim anim = new ShowAnim(20, 10);
 	static JButton bt[] = new JButton[8];
 	// static JButton bt8=new JButton("8");
-	static JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 5, 3);
+	static JSlider slider = new JSlider(JSlider.HORIZONTAL, 1,5, 3);
 	static ImageIcon imageIcon = new ImageIcon("beijing.jpg");
 	static int num = 0;
 
@@ -177,12 +178,15 @@ public class MainUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Show s1 = new Show(parts[7], anim);
+				Random random=new Random();
+				count++;
+				Show s1 = new Show(parts[random.nextInt(7)], anim);
 				Thread t1 = new Thread(s1);
 				anim.requestFocus();
 				t1.start();
 			}
 		});
+		 
 	}
 
 	static boolean setallenable(boolean t) {
